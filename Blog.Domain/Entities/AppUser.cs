@@ -1,7 +1,5 @@
 ﻿using Blog.Domain.Enums;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Blog.Domain.Entities
 {

@@ -1,10 +1,6 @@
 ﻿using Autofac;
 using AutoMapper;
 using Blog.Application.AutoMapper;
-using Blog.Application.Services.Abstract.Post;
-using Blog.Application.Services.Concrete.Post;
-using Blog.Application.Services.Abstract.Genre;
-using Blog.Application.Services.Concrete.Genre;
 using Blog.Domain.Repositories.Abstract.AppUserRepos;
 using Blog.Domain.Repositories.Abstract.AuthorRepos;
 using Blog.Domain.Repositories.Abstract.CommentRepos;
@@ -17,14 +13,8 @@ using Blog.Infrastructure.Repositories.Concrete.CommentRepos;
 using Blog.Infrastructure.Repositories.Concrete.GenreRepos;
 using Blog.Infrastructure.Repositories.Concrete.LikeRepos;
 using Blog.Infrastructure.Repositories.Concrete.PostRepos;
-using Blog.Application.Services.Abstract.Author;
-using Blog.Application.Services.Concrete.Author;
-using Blog.Application.Services.Abstract.Like;
-using Blog.Application.Services.Concrete.Like;
-using Blog.Application.Services.Abstract.Comment;
-using Blog.Application.Services.Concrete.Comment;
-using Blog.Application.Services.Abstract.AppUser;
-using Blog.Application.Services.Concrete.AppUser;
+using Blog.Application.Services.Abstract;
+using Blog.Application.Services.Concrete;
 
 namespace Blog.Application.IoC
 {

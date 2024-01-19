@@ -1,7 +1,7 @@
 ﻿using Blog.Models.DTOs.Like;
 using Blog.Models.VMs;
 
-namespace Blog.Application.Services.Abstract.Like
+namespace Blog.Application.Services.Abstract
 {
     public interface ILikeReadService
     {

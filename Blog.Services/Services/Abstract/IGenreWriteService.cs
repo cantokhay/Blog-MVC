@@ -1,6 +1,6 @@
 ﻿using Blog.Models.DTOs.Genre;
 
-namespace Blog.Application.Services.Abstract.Genre
+namespace Blog.Application.Services.Abstract
 {
     public interface IGenreWriteService
     {

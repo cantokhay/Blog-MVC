@@ -1,6 +1,6 @@
 ﻿using Blog.Models.DTOs.Comment;
 
-namespace Blog.Application.Services.Abstract.Comment
+namespace Blog.Application.Services.Abstract
 {
     public interface ICommentWriteService
     {

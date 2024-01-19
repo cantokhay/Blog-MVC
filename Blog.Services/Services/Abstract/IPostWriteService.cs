@@ -1,6 +1,6 @@
 ﻿using Blog.Models.DTOs.Post;
 
-namespace Blog.Application.Services.Abstract.Post
+namespace Blog.Application.Services.Abstract
 {
     public interface IPostWriteService
     {

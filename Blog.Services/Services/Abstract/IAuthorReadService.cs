@@ -1,6 +1,6 @@
 ﻿using Blog.Models.VMs;
 
-namespace Blog.Application.Services.Abstract.Author
+namespace Blog.Application.Services.Abstract
 {
     public interface IAuthorReadService
     {

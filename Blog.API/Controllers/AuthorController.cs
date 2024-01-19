@@ -1,4 +1,4 @@
-﻿using Blog.Application.Services.Abstract.Author;
+﻿using Blog.Application.Services.Abstract;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Blog.API.Controllers

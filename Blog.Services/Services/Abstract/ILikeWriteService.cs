@@ -1,6 +1,6 @@
 ﻿using Blog.Models.DTOs.Like;
 
-namespace Blog.Application.Services.Abstract.Like
+namespace Blog.Application.Services.Abstract
 {
     public interface ILikeWriteService
     {

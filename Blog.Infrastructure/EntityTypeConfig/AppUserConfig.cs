@@ -9,7 +9,6 @@ namespace Blog.Infrastructure.EntityTypeConfig
         {
             builder.HasKey(x => x.Id);
             builder.Property(x => x.UserName).IsRequired().HasMaxLength(30);
-            builder.Property(x => x.ImagePath).IsRequired(false);
 
             base.Configure(builder);
         }
