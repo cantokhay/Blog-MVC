@@ -10,31 +10,37 @@ namespace Blog.Application.Services.Concrete
     public class AppUserReadService : IAppUserReadService
     {
         private readonly SignInManager<AppUser> _signInManager;
-        private readonly UserManager<AppUser> _userManager;
-        private readonly IMapper _mapper;
         private readonly IAppUserReadRepository _readRepo;
 
-        public AppUserReadService(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, IMapper mapper, IAppUserReadRepository readaRepo)
+        public AppUserReadService(SignInManager<AppUser> signInManager, IAppUserReadRepository readaRepo)
         {
             _signInManager = signInManager;
-            _userManager = userManager;
-            _mapper = mapper;
             _readRepo = readaRepo;
         }
 
-        public Task<UpdateProfileDTO> GetByUserName(string userName)
+        public async Task<UpdateProfileDTO> GetByUserName(string userName)
         {
-            throw new NotImplementedException();
+            UpdateProfileDTO user = await _readRepo.GetFilteredFirstOrDefault(
+                                            select: x => new UpdateProfileDTO
+                                            {
+                                                Id = x.Id,
+                                                UserName = x.UserName,
+                                                Email = x.Email,
+                                                Password = x.PasswordHash,
+                                            },
+                                            where: x => x.UserName == userName);
+
+            return user;
         }
 
         public Task<SignInResult> Login(LoginDTO model)
         {
-            throw new NotImplementedException();
+            return _signInManager.PasswordSignInAsync(model.UserName, model.Password, false, false);
         }
 
         public Task Logout()
         {
-            throw new NotImplementedException();
+            return _signInManager.SignOutAsync();
         }
     }
 }

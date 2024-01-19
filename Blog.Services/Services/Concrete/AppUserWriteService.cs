@@ -24,14 +24,37 @@ namespace Blog.Application.Services.Concrete
             _writeRepo = writeRepo;
         }
 
-        public Task<IdentityResult> Register(RegisterDTO model)
+        public async Task<IdentityResult> Register(RegisterDTO model)
         {
-            throw new NotImplementedException();
+            AppUser user = _mapper.Map<AppUser>(model);
+            IdentityResult result = await _userManager.CreateAsync(user, model.Password);
+            if (result.Succeeded)
+                await _signInManager.SignInAsync(user, false);
+            return result;
         }
 
-        public Task UpdateUser(UpdateProfileDTO model)
+        public async Task UpdateUser(UpdateProfileDTO model)
         {
-            throw new NotImplementedException();
+            if (await _readRepo.Any(x => x.Id == model.Id))
+            {
+                AppUser user = _mapper.Map<AppUser>(model);
+                await _writeRepo.UpdateReposAsync(user);
+
+                if(model.Password != null)
+                {
+                    user.PasswordHash = _userManager.PasswordHasher.HashPassword(user, model.Password);
+                    await _writeRepo.UpdateReposAsync(user);
+                }
+
+                if(model.Email != null)
+                {
+                    AppUser isUserMailExist = await _userManager.FindByEmailAsync(model.Email);
+                    await _userManager.SetUserNameAsync(user, model.UserName);
+
+                    if (isUserMailExist == null)
+                        await _userManager.SetEmailAsync(user, model.Email);
+                }
+            }
         }
     }
 }

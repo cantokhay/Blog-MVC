@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Blog.Application.Services.Abstract;
+using Blog.Domain.Entities;
 using Blog.Domain.Repositories.Abstract.AuthorRepos;
 using Blog.Models.DTOs.Author;
 
@@ -18,24 +19,40 @@ namespace Blog.Application.Services.Concrete
             _mapper = mapper;
         }
 
-        public Task Create(AuthorCreateDTO model)
+        public async Task Create(AuthorCreateDTO model)
         {
-            throw new NotImplementedException();
+            Author author = _mapper.Map<Author>(model);
+            author.CreateDate = DateTime.Now;
+            author.Status = Domain.Enums.Status.Active;
+
+            await _writeRepo.CreateReposAsync(author);
         }
 
-        public Task<AuthorCreateDTO> CreateAuthor()
+        public async Task<AuthorCreateDTO> CreateAuthor()
         {
-            throw new NotImplementedException();
+            return new AuthorCreateDTO();
         }
 
-        public Task Delete(int id)
+        public async Task Delete(int id)
         {
-            throw new NotImplementedException();
+            Author author = await _readRepo.GetFirstOrDefault(x => x.ID == id);
+            author.Status = Domain.Enums.Status.Deleted;
+            author.DeleteDate = DateTime.Now;
+            await _writeRepo.DeleteReposAsync(author);
         }
 
-        public Task Update(AuthorUpdateDTO model)
+        public async Task Update(AuthorUpdateDTO model)
         {
-            throw new NotImplementedException();
+            Author author = await _readRepo.GetFirstOrDefault(x => x.ID == model.ID);
+
+            if (author != null)
+            {
+                author = _mapper.Map<Author>(model);
+                author.UpdateDate = DateTime.Now;
+                author.Status = Domain.Enums.Status.Modified;
+            }
+
+            await _writeRepo.UpdateReposAsync(author);
         }
     }
 }

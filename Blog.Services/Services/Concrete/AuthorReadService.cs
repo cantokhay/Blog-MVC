@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Blog.Application.Services.Abstract;
+using Blog.Domain.Entities;
 using Blog.Domain.Repositories.Abstract.AuthorRepos;
 using Blog.Models.VMs;
 
@@ -16,14 +17,24 @@ namespace Blog.Application.Services.Concrete
             _mapper = mapper;
         }
 
-        public Task<AuthorVM> GetAuthorById(int id)
+        public async Task<AuthorVM> GetAuthorById(int id)
         {
-            throw new NotImplementedException();
+            Author author = await _readRepo.GetFirstOrDefault(x => x.ID == id);
+            return _mapper.Map<AuthorVM>(author);
         }
 
-        public Task<List<AuthorVM>> GetAuthorList()
+        public async Task<List<AuthorVM>> GetAuthorList()
         {
-            throw new NotImplementedException();
+            List<AuthorVM> authorList = await _readRepo.GetFilteredList(
+                                            select: x => new AuthorVM()
+                                            {
+                                                ID = x.ID,
+                                                FirstName = x.FirstName,
+                                                LastName = x.LastName
+                                            },
+                                            where: x => x.Status != Domain.Enums.Status.Deleted,
+                                            orderBy: x => x.OrderBy(x => x.FirstName).ThenBy(x => x.CreateDate));
+            return authorList;
         }
     }
 }
